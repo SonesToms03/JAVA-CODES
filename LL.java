@@ -1,4 +1,4 @@
-//Q1 : REMOVE nth ELEMENT FROM LAST
+//important questions based on Linked List
 import java.util.*;
 public class LL {
     Node head;
@@ -18,14 +18,22 @@ public class LL {
     }
     public static void main(String[] args) {
         LL list=new LL();
-        list.addFirst("d");
-        list.addFirst("a");
         list.addFirst("m");
-        list.addLast("y");
-        list.printList();
+        list.addFirst("o");
+        list.addFirst("m");
+        //list.addLast("d");
+        list.printList();//mom
+        boolean x=list.isPalindrome(list.head);
+        if(x){
+            System.out.println("it is a palindrome");
+        }else{System.out.println("Nope it's not a palindrome");}
         int index=3;
         list.RemoveFromEnd(index);
-    }
+        boolean y=list.HasCycle(list.head);
+        if(y){
+            System.out.println("there is a cycle !!!");
+        }else{System.out.println("there is no cycle !!!");}
+    }    
     public void addFirst(String data){
         Node newN= new Node(data);//specify data bcus constructor requires it 
         newN.next=head;
@@ -117,6 +125,65 @@ public class LL {
         prev.next = prev.next.next;
         printList();
         return head;
+    }
+    //to check whether its is a palindrome 
+    public boolean isPalindrome(Node head){
+        if(head==null||head.next==null){
+            return false; 
+        }
+        Node middle=findMiddle(head);
+        Node SecondhalfStart=reverse(middle.next);
+
+        Node FirstHalfStart=head;
+        
+        while(SecondhalfStart!=null){
+            if(FirstHalfStart.data!=SecondhalfStart.data){
+                return false;
+            }
+            FirstHalfStart=FirstHalfStart.next;//iterating 
+            SecondhalfStart=SecondhalfStart.next;//iterating
+        }
+        return true;
+    }
+    public Node findMiddle(Node head){
+        Node hare=head;//two steps per move
+        Node turtle=head;//one step per move
+        
+        while (hare.next!=null&&hare.next.next!=null) {//checking the two steps
+            hare=hare.next.next;
+            turtle=turtle.next;
+        }
+        return turtle;//turtle node is returned when hare becomes null
+            
+        
+    }
+
+    public Node reverse(Node head){
+        Node prev=null;
+        Node curr=head;
+        while(curr!=null){
+            Node next=curr.next;
+            curr.next=prev;
+            prev=curr;
+            curr=next;
+        }
+        return prev;
+    }
+    //check if there is a cycle in LinkedList
+    public boolean HasCycle(Node head){
+        Node hare=head;//two step
+        Node turtle=head;//one step
+        if(head==null){
+            return false;
+        }
+        while(hare!=null&&hare.next!=null){
+            hare=hare.next.next;
+            turtle=turtle.next;
+            if(hare==turtle){
+                return true;
+            }
+        }
+        return false;
     }
 
 
