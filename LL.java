@@ -1,3 +1,4 @@
+//Q1 : REMOVE nth ELEMENT FROM LAST
 import java.util.*;
 public class LL {
     Node head;
@@ -22,13 +23,14 @@ public class LL {
         list.addFirst("m");
         list.addLast("y");
         list.printList();
+        int index=3;
+        list.RemoveFromEnd(index);
     }
     public void addFirst(String data){
         Node newN= new Node(data);//specify data bcus constructor requires it 
         newN.next=head;
         head=newN;
     }
-
     public void addLast(String data){
         Node newN=new Node(data);
         if(head==null){
@@ -84,7 +86,37 @@ public class LL {
         while(traverseN!=null){
             System.out.print(traverseN.data+" ");
             traverseN=traverseN.next;//looping to next node
-        }System.out.print("->null");
+        }System.out.println("->null");
+    }
+    // to remove element at specified index of LL
+    public Node RemoveFromEnd(int index) {
+        if (head == null || index <= 0) {
+            System.out.println("invalid index/empty list");
+        }
+        // First calculate the size of the list
+        int size = 0;
+        Node curr = head;
+        while (curr != null) {
+            curr = curr.next;
+            size++;
+        }
+        if (index > size) {
+            System.out.println(index+"is greater than size of linked list");;
+        }
+        int indexToSearch = size - index;
+        if (indexToSearch == 0) {
+            head = head.next;
+            return head;
+        }
+        Node prev = head;
+        int i = 1;
+        while (i < indexToSearch) {
+            prev = prev.next;
+            i++;
+        }
+        prev.next = prev.next.next;
+        printList();
+        return head;
     }
 
 
